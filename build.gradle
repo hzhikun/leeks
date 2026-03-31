@@ -39,12 +39,13 @@ dependencies {
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
+// updateSinceUntilBuild=true 会按编译所用的 IDE 版本覆盖 patchPluginXml，通常会把 until-build 写成 253.*，
+// 导致更高版本 IDE（如 261 / 2026.1）无法安装。设为 false 后沿用 patchPluginXml 的 since/until。
 intellij {
-//    version '2023.3.1'
-    localPath.set('C:\\Users\\kmwei\\dev\\tool\\idea')
-//    localPath.set('E:\\tool\\idea')7
-    intellij.setUpdateSinceUntilBuild(true)
-    intellij.setSameSinceUntilBuild(false)
+    // 使用 2026.1 平台 SDK 编译；勿写 version 'x'（会与 Project.version 冲突，导致 intellij.version 未设置）
+    version.set('2026.1')
+    updateSinceUntilBuild = false
+    sameSinceUntilBuild = false
 }
 patchPluginXml {
     changeNotes.set("""
@@ -72,7 +73,7 @@ patchPluginXml {
         v2.9.4 修复插件兼容IDEA 2025.3  from [RainyQing](https://github.com/RainyQing)
         v2.9.5 新增拖动股票上下移动排序  from [RainyQing](https://github.com/RainyQing)
       """)
-    sinceBuild.set('253')  //最低版本限制
+    sinceBuild.set('261')  //最低版本限制
     untilBuild.set(null) //最高版本限制
 }
 
